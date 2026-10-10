@@ -2,6 +2,8 @@
 
 使用原生 HTML、CSS、JavaScript 开发，无需安装网页依赖。
 
+**在线游玩：[打开 2048](https://rainandcr.github.io/2048/)**
+
 ## 游玩
 
 下载项目后双击 `index.html`。电脑使用方向键或 WASD；手机在棋盘上滑动。
