@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2048 数字游戏</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="game">
+    <header>
+      <h1>2048</h1>
+      <div class="scores">
+        <div class="score-box">分数<strong id="score">0</strong></div>
+        <div class="score-box" title="历史最佳单局分数；重新开始后保留，不累加多局分数">最高分<strong id="best">0</strong></div>
+      </div>
+    </header>
+    <div class="toolbar">
+      <p>合并数字，挑战 <strong>2048！</strong></p>
+      <button id="restart" type="button">重新开始</button>
+    </div>
+    <div class="board-wrap">
+      <div id="board" class="board" role="group" aria-label="2048 游戏棋盘"></div>
+      <div id="overlay" class="overlay" hidden>
+        <h2 id="message"></h2>
+        <button id="continue" type="button" hidden>继续挑战</button>
+        <button id="retry" type="button">再玩一次</button>
+        <button id="revive" type="button" hidden>输入口令复活</button>
+      </div>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <p class="instructions"><strong>玩法：</strong>电脑使用方向键或 WASD；手机在棋盘上滑动。相同数字合并，每次有效移动后出现 2 或 4。</p>
+  </main>
+  <dialog id="revive-dialog" aria-labelledby="revive-title" aria-describedby="revive-description">
+    <form id="revive-form">
+      <h2 id="revive-title">输入口令复活</h2>
+      <p id="revive-description">复活会随机清空两个格子，保留当前分数。每个口令最多使用 5 次。</p>
+      <label for="revive-code">复活口令</label>
+      <input id="revive-code" type="text" autocomplete="off" aria-describedby="revive-error" autofocus>
+      <p id="revive-error" class="revive-error" role="alert"></p>
+      <div class="dialog-actions">
+        <button id="revive-cancel" type="button">暂不复活</button>
+        <button type="submit">确认复活</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

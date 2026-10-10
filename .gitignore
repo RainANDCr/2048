@@ -1,0 +1,7 @@
+packaging/tools/
+packaging/build/
+packaging/signing/
+dist/test-data/
+dist/setup-test/
+dist/*.idsig
+publishing/

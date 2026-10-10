@@ -1,0 +1,40 @@
+2048 数字游戏 — 1.0.2
+
+一、Windows 电脑版（Windows 10/11，64 位）
+1. 双击 2048-Setup.exe，点击“安装并启动”。安装到当前用户目录，创建桌面快捷方式，不需要管理员权限。
+2. 也可直接双击 2048.exe，无需安装；单个 EXE 已内置网页和 WebView2 加载组件。
+3. 需要 Microsoft Edge WebView2 运行时和 .NET Framework 4.6.2 或更高版本。大多数 Windows 10/11 电脑已具备；若提示缺少 WebView2，请从微软官网下载 Evergreen Standalone Installer。
+   https://developer.microsoft.com/microsoft-edge/webview2/
+4. 本安装程序只负责复制文件和创建快捷方式，不注册系统卸载项。
+   卸载时先关闭游戏，删除桌面“2048”快捷方式和 %LOCALAPPDATA%\Xu2048\app 文件夹即可。
+   %LOCALAPPDATA%\Xu2048 中的其他文件包含最高分等数据；删除整个文件夹会同时清除游戏数据。
+
+二、Android 手机版（Android 8.0 或更高）
+1. 将 2048.apk 发送到手机，使用手机文件管理器打开。
+2. 按系统提示允许该文件管理器安装应用，完成后从桌面启动“2048”。
+3. 请保持 Android System WebView / Chrome 更新，以支持网页动画和复活对话框。
+4. APK 为本地签名安装包，可直接安装，没有上架应用商店。未申请联网或存储权限。
+
+三、玩法
+- 电脑使用方向键或 WASD；手机在棋盘上滑动。
+- 相同数字合并；每次有效移动后随机生成 2 或 4。
+- 首次达成 2048 可继续挑战。最高分保存在设备本地。
+- 每局当前分数从 0 开始，最高分为历史最佳单局成绩，不累加多局得分。
+- 重新开始会取消尚未完成的动画及其计分。
+- 游戏结束先显示“再玩一次”，下方有“输入口令复活”。
+- 点击复活按钮后输入约定口令，正确后随机清空两个格子，保留分数。
+- 共支持五个约定口令，每个最多成功复活 5 次，次数独立统计；输错、取消或不能保存次数时不扣次数。
+- 次数保存在当前浏览器或设备本地，重新开始、正常退出重启后不会重置；清除应用/浏览器数据会清除记录。不同设备和不同浏览器分别统计。
+- 页面、动画和复活功能均已内置，可离线游玩。
+- Windows、Android 和原网页的分数各自保存，不互相同步；退出后不保存当前棋局。
+
+四、验证范围
+- Windows 游戏已在真实 WebView2 引擎中检查棋盘、动画合并、游戏结束页面、复活口令及本地存储。
+- Windows 安装器检查会在项目目录中验证文件复制和快捷方式创建，不安装到用户系统。
+- Android APK 已通过官方 apksigner 签名校验，校验包名、启动 Activity 和内置网页；尚未在 Android 手机或模拟器上实测。
+- Windows EXE 未购买商业代码签名证书，系统可能显示“未知发布者”。
+
+五、第三方组件
+Windows 版本使用 Microsoft WebView2 SDK 1.0.4258.31；WebView2 Runtime 由微软提供。
+https://learn.microsoft.com/microsoft-edge/webview2/concepts/distribution
+Android 版本使用系统自带 WebView；构建使用 Google Android SDK Build Tools 35.0.0。
