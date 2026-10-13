@@ -3,7 +3,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const source = fs.readFileSync(path.join(__dirname, '..', 'script.js'), 'utf8');
-const codes = ['我叫徐支行', '徐支行', '支行', '子涵', '徐子涵'];
+const codes = ['cr是区'];
+// 早期版本公开过的口令，现已全部失效。
+const retiredCodes = ['我叫徐支行', '徐支行', '支行', '子涵', '徐子涵'];
 const storageKey = '2048-revive-usage';
 const storage = new Map();
 let writesBlocked = false;
@@ -51,6 +53,14 @@ assert.equal(storage.has(storageKey), false);
 game.run('openReviveDialog(); reviveDialog.close()');
 assert.equal(storage.has(storageKey), false);
 
+// 已废弃的五个口令不能再复活，也不能扣减次数。
+for (const retired of retiredCodes) {
+  game.dead();
+  game.submit(retired);
+  assert.equal(game.run('gameOver'), true);
+  assert.equal(storage.has(storageKey), false);
+}
+
 for (const code of codes) {
   for (let i = 1; i <= 5; i++) {
     game.dead();
@@ -75,7 +85,7 @@ for (const code of codes) {
   assert.equal(JSON.parse(storage.get(storageKey))[code], 5);
   assert.match(game.error(), /5 次/);
 }
-assert.equal(Object.values(JSON.parse(storage.get(storageKey))).reduce((a, b) => a + b), 25);
+assert.equal(Object.values(JSON.parse(storage.get(storageKey))).reduce((a, b) => a + b), 5);
 
 // 保存失败时不允许复活，避免正常重启后丢失额度限制。
 storage.clear();
@@ -96,4 +106,4 @@ for (let i = 0; i < 4; i++) { game.dead(); game.submit(codes[0]); }
 second.dead(); second.submit(codes[0]);
 assert.equal(second.run('gameOver'), true);
 assert.equal(JSON.parse(storage.get(storageKey))[codes[0]], 5);
-console.log('PASS: all five codes, five uses each, sixth rejected, independent limits, reload/restart persistence, wrong/canceled/duplicate attempts, score preservation, storage failure, stale window');
+console.log('PASS: single revive code, five uses, sixth rejected, retired codes rejected, reload/restart persistence, wrong/canceled/duplicate attempts, score preservation, storage failure, stale window');
