@@ -151,22 +151,23 @@ class GameWindow : Form
                   reviveInput.value = 'wrong'; document.getElementById('revive-form').requestSubmit();
                   check(gameOver && reviveError.textContent.length > 0, 'wrong code');
                   reviveInput.value = '我叫徐支行'; document.getElementById('revive-form').requestSubmit();
-                  check(gameOver && readReviveUsage()['我叫徐支行'] === undefined, 'retired code rejected');
-                  reviveInput.value = 'cr是区'; document.getElementById('revive-form').requestSubmit();
                   check(!gameOver && !reviveDialog.open && board.flat().filter(v => !v).length === 2 && score === 8, 'revive');
-                  for (let count = 1; count < 5; count++) {
+                  for (const code of ['我叫徐支行', '徐支行', '支行', '子涵', '徐子涵']) {
+                    const used = readReviveUsage()[code];
+                    for (let count = used; count < 5; count++) {
+                      board = [[2,4,2,4],[4,2,4,2],[2,4,2,4],[4,2,4,2]];
+                      gameOver = true; render(); reviveButton.click();
+                      reviveInput.value = code; document.getElementById('revive-form').requestSubmit();
+                      check(!gameOver && readReviveUsage()[code] === count + 1 && score === 8, 'code use ' + count);
+                      restart(); score = 8;
+                    }
                     board = [[2,4,2,4],[4,2,4,2],[2,4,2,4],[4,2,4,2]];
-                    gameOver = true; render(); reviveButton.click();
-                    reviveInput.value = 'cr是区'; document.getElementById('revive-form').requestSubmit();
-                    check(!gameOver && readReviveUsage()['cr是区'] === count + 1 && score === 8, 'code use ' + count);
+                    gameOver = true; render(); reviveButton.click(); reviveInput.value = code;
+                    document.getElementById('revive-form').requestSubmit();
+                    check(gameOver && reviveDialog.open && readReviveUsage()[code] === 5, 'sixth use blocked');
                     restart(); score = 8;
                   }
-                  board = [[2,4,2,4],[4,2,4,2],[2,4,2,4],[4,2,4,2]];
-                  gameOver = true; render(); reviveButton.click(); reviveInput.value = 'cr是区';
-                  document.getElementById('revive-form').requestSubmit();
-                  check(gameOver && reviveDialog.open && readReviveUsage()['cr是区'] === 5, 'sixth use blocked');
-                  restart(); score = 8;
-                  check(Object.values(JSON.parse(localStorage.getItem(REVIVE_STORAGE_KEY))).reduce((a,b) => a+b, 0) === 5, 'persistent revive limit');
+                  check(Object.values(JSON.parse(localStorage.getItem(REVIVE_STORAGE_KEY))).reduce((a,b) => a+b, 0) === 25, 'independent persistent revive limits');
                   localStorage.removeItem(REVIVE_STORAGE_KEY); reviveUsage = Object.create(null);
                   localStorage.setItem('2048-packaging-check', 'ok');
                   check(localStorage.getItem('2048-packaging-check') === 'ok', 'storage');

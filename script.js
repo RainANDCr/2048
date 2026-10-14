@@ -4,8 +4,7 @@ const SIZE = 4;
 const STORAGE_KEY = "2048-best-score";
 const REVIVE_STORAGE_KEY = "2048-revive-usage";
 const REVIVE_LIMIT = 5;
-// 唯一有效的复活口令；其余输入一律拒绝。
-const REVIVE_CODES = ["cr是区"];
+const REVIVE_CODES = ["我叫徐支行", "徐支行", "支行", "子涵", "徐子涵"];
 let reviveUsage = Object.create(null);
 const boardElement = document.getElementById("board");
 const scoreElement = document.getElementById("score");

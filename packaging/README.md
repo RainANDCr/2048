@@ -26,7 +26,7 @@ Android 签名：构建脚本自动运行官方 apksigner verify；未进行 And
 
 回归检查（无需安装依赖）：
 - `node packaging/score.test.cjs` 检查跨局计分及动画中重开。
-- `node packaging/revive.test.cjs` 检查复活口令额度、持久化、废弃口令拒绝及失败提交。
+- `node packaging/revive.test.cjs` 检查五个口令独立额度、持久化及失败提交。
 
-复活额度使用本地存储键 `2048-revive-usage`，该口令最多成功使用五次。
+复活额度使用本地存储键 `2048-revive-usage`，每个口令最多成功使用五次。
 重开不清除额度；清除浏览器/应用数据会清除记录，设备之间不共享次数。
